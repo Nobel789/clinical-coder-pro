@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Clinical Coder Pro</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Clinical Coder Pro</h1>
+        <p>Revenue-cycle coding assistance with evidence, review, and audit controls</p>
+      </div>
+      <div class="top-actions">
+        <span class="status-pill" id="apiStatus">Checking API</span>
+        <button id="exportButton" type="button" class="secondary">Export Review</button>
+      </div>
+    </header>
+
+    <section class="kpi-strip" aria-label="Operational summary">
+      <div class="kpi">
+        <span>Candidates</span>
+        <strong id="kpiCandidates">0</strong>
+      </div>
+      <div class="kpi">
+        <span>Approved</span>
+        <strong id="kpiApproved">0</strong>
+      </div>
+      <div class="kpi">
+        <span>Review Load</span>
+        <strong id="kpiReviewLoad">-</strong>
+      </div>
+      <div class="kpi">
+        <span>PHI Flags</span>
+        <strong id="kpiPhi">0</strong>
+      </div>
+    </section>
+
+    <main class="workspace">
+      <section class="note-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Clinical Note Intake</h2>
+            <p>Paste a note for candidate coding. Human review remains required.</p>
+          </div>
+          <label>
+            Note date
+            <input id="noteDate" type="date" value="2024-01-22" />
+          </label>
+        </div>
+        <textarea id="noteText" spellcheck="false">Patient presents to ED with chest pain and shortness of breath.
+EKG shows ST elevation.
+Aspirin 325mg given in ED.
+History of Type 2 Diabetes on Metformin 1000mg BID.
+HbA1c today is 7.8%.
+Denies fever.
+Cardiology consulted immediately.</textarea>
+        <div class="actions">
+          <button id="runButton" type="button">Analyze Note</button>
+          <button id="sampleButton" type="button" class="secondary">Load Sample</button>
+          <button id="clearButton" type="button" class="secondary">Clear</button>
+        </div>
+      </section>
+
+      <section class="review-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Coder Work Queue</h2>
+            <p id="queueSubtitle">No analysis yet</p>
+          </div>
+          <div class="metrics">
+            <span id="candidateCount">0 candidates</span>
+            <span id="approvedCount">0 approved</span>
+          </div>
+        </div>
+
+        <div class="warnings" id="warnings"></div>
+        <div class="tabs" role="tablist" aria-label="Candidate filters">
+          <button class="tab active" data-filter="all" type="button">All</button>
+          <button class="tab" data-filter="ICD-10-CM" type="button">ICD-10-CM</button>
+          <button class="tab" data-filter="CPT" type="button">CPT</button>
+          <button class="tab" data-filter="LOINC" type="button">LOINC</button>
+          <button class="tab" data-filter="RxNorm" type="button">RxNorm</button>
+          <button class="tab" data-filter="risk" type="button">Risk</button>
+        </div>
+        <div class="candidate-list" id="candidateList"></div>
+      </section>
+    </main>
+
+    <section class="details">
+      <div>
+        <h2>Evidence View</h2>
+        <div id="highlightedNote" class="highlighted-note"></div>
+      </div>
+      <div>
+        <h2>Compliance Readiness</h2>
+        <div id="compliancePanel" class="compliance-panel"></div>
+      </div>
+      <div>
+        <h2>Audit Trail</h2>
+        <div id="auditTrail" class="audit-trail"></div>
+      </div>
+      <div>
+        <h2>Structured Export</h2>
+        <pre id="jsonOutput">{}</pre>
+      </div>
+    </section>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
